@@ -8,8 +8,8 @@ from cryptography.exceptions import InvalidSignature
 
 
 
-def generate_signature(clear_text):
-    with open("private_key.pem", "rb") as key_file:
+def generate_signature(clear_text, keyfile='private_key.pem'):
+    with open(keyfile, "rb") as key_file:
         private_key = serialization.load_pem_private_key(
             key_file.read(),
             password=None,
@@ -30,8 +30,8 @@ def generate_signature(clear_text):
 
 
 
-def validate_signature(clear_text, signature):
-    with open("public_key.pem", "r") as key_file:
+def validate_signature(clear_text, signature, keyfile="public_key.pem"):
+    with open(keyfile, "r") as key_file:
         key_data = key_file.read()
         if not "BEGIN PUBLIC KEY" in key_data:
             key_data = f'-----BEGIN PUBLIC KEY-----\n{key_data}\n-----END PUBLIC KEY-----'
